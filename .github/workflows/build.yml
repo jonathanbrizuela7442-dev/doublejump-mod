@@ -12,11 +12,13 @@ jobs:
           java-version: 21
           distribution: 'microsoft'
       - name: make gradle executable
-        run: chmod +x gradlew
+        run: chmod +x **/gradlew
       - name: build jar
-        run: ./gradlew build
+        run: |
+          cd $(dirname $(find . -name gradlew | head -n 1))
+          ./gradlew build
       - name: upload jar
         uses: actions/upload-artifact@v4
         with:
           name: Mod-Jar
-          path: build/libs/*.jar
+          path: "**/build/libs/*.jar"
